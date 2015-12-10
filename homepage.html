@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<script>
+
+var app = angular.module('userhomepage', [])
+
+app.controller('homepageController', function($scope,$http,$window){
+
+ $scope.name = "";
+ $scope.email = "";
+ $scope.username = "";
+ $scope.type = "";
+ $scope.projectName = "";
+ $scope.language = "";
+ $scope.logout = function(){
+
+ 	$http.get("http://localhost:8080/logout")
+ 	.then(function successcallback(response){
+	 	$window.location.href = "http://localhost:8080/";
+	 	
+ 	}, function errorcallback(err){
+	 	
+ 	})
+
+	 
+ }
+ 
+ 		$http.get("http://localhost:8080/getuserdata")
+ 		.then(function successcallback(response){
+			//alert(response.data.result)	 		
+			$scope.userdata = response.data[0].name;
+			//alert(response.data[0].name);
+			 	 		
+ 		}, function errorcallback(err){
+	 		
+ 	
+ 		})
+
+	
+
+})
+
+
+
+
+
+</script>
+
+<body>
+	
+	<div ng-app = "userhomepage" ng-controller = "homepageController">
+		
+		<h1> WELCOME  {{userdata}}</h1>
+		
+		<p> <input type = "button" ng-click = "logout()" value = "Logout"/> </p>
+			
+		
+	</div>
+	
+</body>
+
+</html>

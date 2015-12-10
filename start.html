@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<script>
+	
+	var app = angular.module('loginApp', []);
+	app.controller('loginController', function($scope,$http,$window) {
+    	$scope.username = "";
+		$scope.password = "";
+		$scope.userData = "";
+		$scope.login = function(){
+			
+			
+			var data = {
+				
+				username:	$scope.username,
+				password: $scope.password
+				
+				
+			};
+			
+			$http.post('http://localhost:8080/login', data)
+			.then(function successCallback(res){
+			
+						
+					    if(res.data.result == "fail") {
+						    
+						    alert("username or password wrong");
+						     $window.location.href = "http://localhost:8080/";
+
+					    } else {
+						    
+						    alert("welcome to system");
+						     $window.location.href = "http://localhost:8080/signup.html";
+						    
+					    }
+					   														
+				}, function errorCallback(err){
+					
+					alert("error occured");
+					alert(err);
+					
+					
+			    });		
+			
+			
+						
+		}
+	});
+	
+</script>
+
+
+
+
+
+<body>
+
+<div ng-app="loginApp" ng-controller="loginController">
+ 	<p>Username : <input type="text" ng-model="username"></p>
+ 	<p>Password : <input type="text" ng-model="password"></p>
+ 	<p><input type="button" ng-click="login()" value= "submit"></input></p>
+ 	<div>Welcome {{userData}}</div>
+</div>
+
+</body>
+
+
+
+</html>
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<script> 
+	
+	var app = angular.module('signup', [])
+	
+	app.controller('signupcontroller', function($scope, $http){
+		$scope.name = "";
+		$scope.email = "";
+		$scope.username = "";
+		$scope.password="";
+		$scope.type = "1";
+		
+		$scope.signup = function(){
+			
+			var data = {
+				
+				name : $scope.name,
+				email : $scope.email,
+				username: $scope.username,
+				password : $scope.password,
+				type : $scope.type
+				
+			};
+			
+			$http.post("http://localhost:8080/signup", data)
+			.then(function successcallback(response){
+			
+			alert(JSON.stringify(response));	
+			
+			},
+			
+			function errorcallback (err){
+				alert(err);
+				
+			})
+			
+		}
+				
+	});
+	
+</script>
+
+<body>
+	
+	<div ng-app="signup" ng-controller="signupcontroller">
+		
+		<h1> ENTER THE DETAILS </h1>
+		<p> Name : <input type="text" ng-model ="name"></input></p>
+		<p> email: <input type="text" ng-model = "email"></input></p>
+		<p> username : <input type="text" ng-model = "username"></input></p>
+		<p> password : <input type="password" ng-model = "password"></input></p>
+		<p> type : <input type="text" ng-model = "type"></input></p>
+		<p><input type="button" ng-click= "signup()" value="submit"</input></p>	
+		
+	
+		
+	</div>
+</body>
+
